@@ -7,7 +7,7 @@
 
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #f0f8ff;
       margin: 0;
       padding: 20px;
@@ -22,7 +22,7 @@
     }
     h2 {
       text-align: center;
-      color: #007bff;
+      color: #333;
     }
     label {
       font-weight: bold;
@@ -41,7 +41,7 @@
       margin-top: 20px;
       width: 100%;
       padding: 12px;
-      background-color: #007bff;
+      background-color: #333;
       color: white;
       font-size: 16px;
       border: none;
@@ -62,9 +62,9 @@
       padding: 20px;
       border: 1px dashed #999;
       border-radius: 10px;
-      font-family: monospace;
       white-space: pre-line;
       display: none;
+      font-family: monospace;
     }
     .footer {
       text-align: center;
@@ -80,16 +80,16 @@
 <div class="container">
   <h2>Siri Credit Card Services</h2>
 
-  <label>Amount Added (₹):</label>
+  <label>Amount Added (INR):</label>
   <input type="number" id="amountAdded">
 
-  <label>OR Final Bank Amount (₹):</label>
+  <label>OR Final Bank Amount (INR):</label>
   <input type="number" id="bankAmount">
 
-  <label>Platform Charges (%)</label>
+  <label>Platform Charges (%):</label>
   <input type="number" id="platformRate" value="2">
 
-  <label>Fixed Server Fee (₹)</label>
+  <label>Fixed Server Fee (INR):</label>
   <input type="number" id="fixedFee" value="15">
 
   <button onclick="calculate()">Generate Receipt</button>
@@ -134,30 +134,30 @@ function calculate() {
   }
 
   const receiptText =
-`◆ SIRI CREDIT CARD SERVICES
+`SIRI CREDIT CARD SERVICES
 Transaction Receipt
 
-◆ Date: ${date}
-◆ Handled By: Sagar
-◆ Contact: 9959787923
+Date: ${date}
+Handled By: Sagar
+Contact: 9959787923
 
 -------------------------
-◆ Transaction Amount : ₹${amount.toFixed(2)}
-◆ Platform Fee (${(platformRate*100).toFixed(2)}%) : ₹${platformFee.toFixed(2)}
-◆ Additional Fee     : ₹${fixedFee.toFixed(2)}
+Transaction Amount : INR ${amount.toFixed(2)}
+Platform Fee (${(platformRate * 100).toFixed(2)}%) : INR ${platformFee.toFixed(2)}
+Additional Fee : INR ${fixedFee.toFixed(2)}
 -------------------------
-◆ Total Charges      : ₹${totalFee.toFixed(2)}
-◆ Amount Credited    : ₹${bankSent.toFixed(2)}
+Total Charges : INR ${totalFee.toFixed(2)}
+Amount Credited : INR ${bankSent.toFixed(2)}
 -------------------------
 
 We also provide services like:
-• SBI Life Insurance
-• Star Health Insurance
-• Vehicle Insurance
-• Credit Card Applications
-• Credit Card Swiping
+- SBI Life Insurance
+- Star Health Insurance
+- Vehicle Insurance
+- Credit Card Applications
+- Credit Card Swiping
 
-◆ Thank you for choosing
+Thank you for choosing
 Siri General Insurance Services`;
 
   const box = document.getElementById('receiptOutput');
