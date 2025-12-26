@@ -8,17 +8,17 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f8ff;
+      background-color: #f2f6fa;
       margin: 0;
       padding: 20px;
     }
     .container {
       max-width: 500px;
       margin: auto;
-      background: white;
+      background: #ffffff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     h2 {
       text-align: center;
@@ -26,26 +26,26 @@
     }
     label {
       font-weight: bold;
-      display: block;
       margin-top: 15px;
+      display: block;
     }
     input {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      font-size: 16px;
-      border-radius: 6px;
+      font-size: 15px;
       border: 1px solid #ccc;
+      border-radius: 5px;
     }
     button {
-      margin-top: 20px;
       width: 100%;
       padding: 12px;
-      background-color: #333;
+      margin-top: 20px;
+      background: #333;
       color: white;
-      font-size: 16px;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
     }
     .btns {
@@ -57,14 +57,13 @@
       flex: 1;
     }
     .receipt {
-      background: #fff;
       margin-top: 30px;
       padding: 20px;
       border: 1px dashed #999;
-      border-radius: 10px;
+      border-radius: 8px;
       white-space: pre-line;
-      display: none;
       font-family: monospace;
+      display: none;
     }
     .footer {
       text-align: center;
@@ -110,10 +109,10 @@
 
 <script>
 function calculate() {
-  const amountAdded = parseFloat(document.getElementById('amountAdded').value);
-  const bankAmount = parseFloat(document.getElementById('bankAmount').value);
-  const platformRate = parseFloat(document.getElementById('platformRate').value) / 100;
-  const fixedFee = parseFloat(document.getElementById('fixedFee').value);
+  const amountAdded = parseFloat(document.getElementById("amountAdded").value);
+  const bankAmount = parseFloat(document.getElementById("bankAmount").value);
+  const platformRate = parseFloat(document.getElementById("platformRate").value) / 100;
+  const fixedFee = parseFloat(document.getElementById("fixedFee").value);
   const date = new Date().toLocaleString();
 
   let amount, platformFee, totalFee, bankSent;
@@ -137,18 +136,16 @@ function calculate() {
 `SIRI CREDIT CARD SERVICES
 Transaction Receipt
 
-Date: ${date}
-Handled By: Sagar
-Contact: 9959787923
+Date       : ${date}
+Handled By : Sagar
+Contact    : 9959787923
 
--------------------------
 Transaction Amount : INR ${amount.toFixed(2)}
-Platform Fee (${(platformRate * 100).toFixed(2)}%) : INR ${platformFee.toFixed(2)}
-Additional Fee : INR ${fixedFee.toFixed(2)}
--------------------------
+Platform Fee (${(platformRate*100).toFixed(2)}%) : INR ${platformFee.toFixed(2)}
+Additional Fee     : INR ${fixedFee.toFixed(2)}
+
 Total Charges : INR ${totalFee.toFixed(2)}
 Amount Credited : INR ${bankSent.toFixed(2)}
--------------------------
 
 We also provide services like:
 - SBI Life Insurance
@@ -160,23 +157,23 @@ We also provide services like:
 Thank you for choosing
 Siri General Insurance Services`;
 
-  const box = document.getElementById('receiptOutput');
-  box.style.display = 'block';
+  const box = document.getElementById("receiptOutput");
+  box.style.display = "block";
   box.textContent = receiptText;
 }
 
 function downloadReceipt() {
-  html2canvas(document.getElementById('receiptOutput')).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'Siri_Receipt.png';
+  html2canvas(document.getElementById("receiptOutput")).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "Transaction_Receipt.png";
     link.href = canvas.toDataURL();
     link.click();
   });
 }
 
 function shareWhatsApp() {
-  const text = document.getElementById('receiptOutput').textContent;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  const text = document.getElementById("receiptOutput").textContent;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
 }
 </script>
 
