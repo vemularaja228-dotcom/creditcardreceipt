@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f6fa;
+      background-color: #f0f8ff;
       margin: 0;
       padding: 20px;
     }
@@ -18,34 +18,34 @@
       background: #ffffff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     h2 {
       text-align: center;
-      color: #333;
+      color: #007bff;
     }
     label {
       font-weight: bold;
-      margin-top: 15px;
       display: block;
+      margin-top: 15px;
     }
     input {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      font-size: 15px;
+      font-size: 16px;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 5px;
     }
     button {
+      margin-top: 20px;
       width: 100%;
       padding: 12px;
-      margin-top: 20px;
-      background: #333;
+      background-color: #007bff;
       color: white;
-      border: none;
-      border-radius: 5px;
       font-size: 16px;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
     }
     .btns {
@@ -57,12 +57,13 @@
       flex: 1;
     }
     .receipt {
+      background: #fff;
       margin-top: 30px;
       padding: 20px;
       border: 1px dashed #999;
-      border-radius: 8px;
-      white-space: pre-line;
+      border-radius: 10px;
       font-family: monospace;
+      white-space: pre-line;
       display: none;
     }
     .footer {
@@ -79,16 +80,16 @@
 <div class="container">
   <h2>Siri Credit Card Services</h2>
 
-  <label>Amount Added (INR):</label>
-  <input type="number" id="amountAdded">
+  <label>Amount Added (₹):</label>
+  <input type="number" id="amountAdded" placeholder="e.g., 100000">
 
-  <label>OR Final Bank Amount (INR):</label>
-  <input type="number" id="bankAmount">
+  <label>OR Final Bank Amount (₹):</label>
+  <input type="number" id="bankAmount" placeholder="e.g., 97985">
 
   <label>Platform Charges (%):</label>
   <input type="number" id="platformRate" value="2">
 
-  <label>Fixed Server Fee (INR):</label>
+  <label>Fixed Server Fee (₹):</label>
   <input type="number" id="fixedFee" value="15">
 
   <button onclick="calculate()">Generate Receipt</button>
@@ -133,19 +134,24 @@ function calculate() {
   }
 
   const receiptText =
-`SIRI CREDIT CARD SERVICES
+`-------------------------------
+Siri Credit Card Services
 Transaction Receipt
+-------------------------------
 
-Date       : ${date}
-Handled By : Sagar
-Contact    : 9959787923
+Date        : ${date}
+Handled By  : Sagar
+Contact     : 9959787923
 
-Transaction Amount : INR ${amount.toFixed(2)}
-Platform Fee (${(platformRate*100).toFixed(2)}%) : INR ${platformFee.toFixed(2)}
-Additional Fee     : INR ${fixedFee.toFixed(2)}
+Amount      : ₹${amount.toFixed(2)}
+Platform %  : ${(platformRate * 100).toFixed(2)}%
+Platform ₹  : ₹${platformFee.toFixed(2)}
+Add. Fee    : ₹${fixedFee.toFixed(2)}
 
-Total Charges : INR ${totalFee.toFixed(2)}
-Amount Credited : INR ${bankSent.toFixed(2)}
+-------------------------------
+Total Fee   : ₹${totalFee.toFixed(2)}
+To Bank     : ₹${bankSent.toFixed(2)}
+-------------------------------
 
 We also provide services like:
 - SBI Life Insurance
@@ -154,8 +160,10 @@ We also provide services like:
 - Credit Card Applications
 - Credit Card Swiping
 
+-------------------------------
 Thank you for choosing
-Siri General Insurance Services`;
+Siri General Insurance Services
+-------------------------------`;
 
   const box = document.getElementById("receiptOutput");
   box.style.display = "block";
@@ -165,7 +173,7 @@ Siri General Insurance Services`;
 function downloadReceipt() {
   html2canvas(document.getElementById("receiptOutput")).then(canvas => {
     const link = document.createElement("a");
-    link.download = "Transaction_Receipt.png";
+    link.download = "Siri_Transaction_Receipt.png";
     link.href = canvas.toDataURL();
     link.click();
   });
