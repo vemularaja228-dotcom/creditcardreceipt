@@ -134,20 +134,20 @@ function calculate() {
   }
 
   const receiptText =
-`🧾 SIRI CREDIT CARD SERVICES
+`📄 SIRI CREDIT CARD SERVICES
 Transaction Receipt
 
-📅 Date: ${date}
-👤 Handled By: Sagar
+⏰ Date: ${date}
+👨 Handled By: Sagar
 📞 Contact: 9959787923
 
 -------------------------
-💳 Transaction Amount : ₹${amount.toFixed(2)}
-📉 Platform Fee (${(platformRate*100).toFixed(2)}%) : ₹${platformFee.toFixed(2)}
-➕ Additional Fee     : ₹${fixedFee.toFixed(2)}
+💰 Transaction Amount : ₹${amount.toFixed(2)}
+➖ Platform Fee (${(platformRate * 100).toFixed(2)}%) : ₹${platformFee.toFixed(2)}
+➕ Additional Fee : ₹${fixedFee.toFixed(2)}
 -------------------------
-💰 Total Charges     : ₹${totalFee.toFixed(2)}
-🏦 Amount Credited   : ₹${bankSent.toFixed(2)}
+💰 Total Charges : ₹${totalFee.toFixed(2)}
+💵 Amount Credited : ₹${bankSent.toFixed(2)}
 -------------------------
 
 We also provide services like:
@@ -162,7 +162,7 @@ Siri General Insurance Services`;
 
   const receiptBox = document.getElementById('receiptOutput');
   receiptBox.style.display = 'block';
-  receiptBox.innerText = receiptText;
+  receiptBox.textContent = receiptText;
 }
 
 function downloadReceipt() {
@@ -175,7 +175,7 @@ function downloadReceipt() {
 }
 
 function shareWhatsApp() {
-  const text = document.getElementById('receiptOutput').innerText;
+  const text = document.getElementById('receiptOutput').textContent;
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
 }
 </script>
