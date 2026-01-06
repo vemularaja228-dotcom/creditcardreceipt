@@ -1,94 +1,71 @@
 <script>
-function calculate() {
-  const amountAddedVal = document.getElementById("amountAdded").value;
-  const bankAmountVal  = document.getElementById("bankAmount").value;
-  const platformRate   = parseFloat(document.getElementById("platformRate").value) / 100;
-  const fixedFee       = parseFloat(document.getElementById("fixedFee").value);
-  const date           = new Date().toLocaleString();
+document.addEventListener("DOMContentLoaded", function () {
 
-  const amountAdded = amountAddedVal ? parseFloat(amountAddedVal) : NaN;
-  const bankAmount  = bankAmountVal ? parseFloat(bankAmountVal) : NaN;
+  window.calculate = function () {
+    var amountAddedVal = document.getElementById("amountAdded").value;
+    var bankAmountVal  = document.getElementById("bankAmount").value;
+    var rateVal        = document.getElementById("platformRate").value;
+    var fixedVal       = document.getElementById("fixedFee").value;
 
-  let amount, platformFee, totalFee, bankSent, inputMode;
+    var rate  = parseFloat(rateVal) / 100;
+    var fixed = parseFloat(fixedVal);
 
-  // Case 1: Amount Added
-  if (!isNaN(amountAdded) && isNaN(bankAmount)) {
-    inputMode = "Amount Added by Customer";
-    amount = amountAdded;
-    platformFee = amount * platformRate;
-    totalFee = platformFee + fixedFee;
-    bankSent = amount - totalFee;
+    var amountAdded = amountAddedVal ? parseFloat(amountAddedVal) : NaN;
+    var bankAmount  = bankAmountVal ? parseFloat(bankAmountVal) : NaN;
 
-  // Case 2: Final Bank Amount
-  } else if (isNaN(amountAdded) && !isNaN(bankAmount)) {
-    inputMode = "Final Bank Amount Requested";
-    bankSent = bankAmount;
-    amount = (bankSent + fixedFee) / (1 - platformRate);
-    platformFee = amount * platformRate;
-    totalFee = platformFee + fixedFee;
+    var amount, platformFee, totalFee, bankSent, inputMode;
 
-  } else {
-    alert("Please enter ONLY one value: Amount Added OR Final Bank Amount.");
-    return;
-  }
+    if (!isNaN(amountAdded) && isNaN(bankAmount)) {
+      inputMode = "Amount Added by Customer";
+      amount = amountAdded;
+      platformFee = amount * rate;
+      totalFee = platformFee + fixed;
+      bankSent = amount - totalFee;
 
-  const receiptText =
-`-------------------------------
-Siri Credit Card Services
-Transaction Receipt
--------------------------------
-Receipt Type : Credit Card to Bank Transfer
-Input Mode   : ${inputMode}
+    } else if (isNaN(amountAdded) && !isNaN(bankAmount)) {
+      inputMode = "Final Bank Amount Requested";
+      bankSent = bankAmount;
+      amount = (bankSent + fixed) / (1 - rate);
+      platformFee = amount * rate;
+      totalFee = platformFee + fixed;
 
-Date & Time  : ${date}
-Handled By   : Sagar
-Contact      : 9959787923
+    } else {
+      alert("Please enter ONLY one value.");
+      return;
+    }
 
--------------------------------
-Amount Added : ₹${amount.toFixed(2)}
-Platform %   : ${(platformRate * 100).toFixed(2)}%
-Platform Fee : ₹${platformFee.toFixed(2)}
-Fixed Fee    : ₹${fixedFee.toFixed(2)}
--------------------------------
-Total Fee    : ₹${totalFee.toFixed(2)}
-Net to Bank  : ₹${bankSent.toFixed(2)}
--------------------------------
+    var receiptText =
+"-------------------------------\n" +
+"Siri Credit Card Services\n" +
+"Transaction Receipt\n" +
+"-------------------------------\n" +
+"Input Mode   : " + inputMode + "\n" +
+"Date & Time  : " + new Date().toLocaleString() + "\n" +
+"Handled By   : Sagar\n" +
+"Contact      : 9959787923\n\n" +
+"Amount Added : ₹" + amount.toFixed(2) + "\n" +
+"Platform %   : " + (rate * 100).toFixed(2) + "%\n" +
+"Platform Fee : ₹" + platformFee.toFixed(2) + "\n" +
+"Fixed Fee    : ₹" + fixed.toFixed(2) + "\n" +
+"-------------------------------\n" +
+"Total Fee    : ₹" + totalFee.toFixed(2) + "\n" +
+"Net to Bank  : ₹" + bankSent.toFixed(2) + "\n" +
+"-------------------------------\n" +
+"Thank you for choosing Siri Credit Card Services.";
 
-Service Note:
-This is a system-generated receipt.
-Charges once processed are non-reversible.
+    var box = document.getElementById("receiptOutput");
+    box.style.display = "block";
+    box.textContent = receiptText;
+  };
 
--------------------------------
-Our Services
-• Credit Card Swiping
-• Insurance (Life, Health, Vehicle)
-• Credit Card Applications
--------------------------------
+  window.shareWhatsApp = function () {
+    var text = document.getElementById("receiptOutput").textContent.trim();
+    if (!text) {
+      alert("Please generate the receipt first.");
+      return;
+    }
+    window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
+  };
 
-Thank you for choosing
-Siri Credit Card Services
-Please retain this receipt for reference.`;
-
-  const box = document.getElementById("receiptOutput");
-  box.style.display = "block";
-  box.textContent = receiptText;
-}
-
-function shareWhatsApp() {
-  const text = document.getElementById("receiptOutput").textContent.trim();
-  if (!text) {
-    alert("Please generate the receipt first.");
-    return;
-  }
-  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
-}
-
-function downloadReceipt() {
-  html2canvas(document.getElementById("receiptOutput")).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "Siri_Transaction_Receipt.png";
-    link.href = canvas.toDataURL();
-    link.click();
-  });
-}
+});
 </script>
