@@ -1,71 +1,54 @@
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+function calculate() {
+  var amountAdded = parseFloat(document.getElementById("amountAdded").value);
+  var bankAmount  = parseFloat(document.getElementById("bankAmount").value);
+  var rate        = parseFloat(document.getElementById("platformRate").value) / 100;
+  var fixedFee    = parseFloat(document.getElementById("fixedFee").value);
 
-  window.calculate = function () {
-    var amountAddedVal = document.getElementById("amountAdded").value;
-    var bankAmountVal  = document.getElementById("bankAmount").value;
-    var rateVal        = document.getElementById("platformRate").value;
-    var fixedVal       = document.getElementById("fixedFee").value;
+  var amount, platformFee, totalFee, toBank;
 
-    var rate  = parseFloat(rateVal) / 100;
-    var fixed = parseFloat(fixedVal);
+  if (!isNaN(amountAdded) && isNaN(bankAmount)) {
+    amount = amountAdded;
+    platformFee = amount * rate;
+    totalFee = platformFee + fixedFee;
+    toBank = amount - totalFee;
 
-    var amountAdded = amountAddedVal ? parseFloat(amountAddedVal) : NaN;
-    var bankAmount  = bankAmountVal ? parseFloat(bankAmountVal) : NaN;
+  } else if (isNaN(amountAdded) && !isNaN(bankAmount)) {
+    toBank = bankAmount;
+    amount = (toBank + fixedFee) / (1 - rate);
+    platformFee = amount * rate;
+    totalFee = platformFee + fixedFee;
 
-    var amount, platformFee, totalFee, bankSent, inputMode;
+  } else {
+    alert("Enter only ONE value.");
+    return;
+  }
 
-    if (!isNaN(amountAdded) && isNaN(bankAmount)) {
-      inputMode = "Amount Added by Customer";
-      amount = amountAdded;
-      platformFee = amount * rate;
-      totalFee = platformFee + fixed;
-      bankSent = amount - totalFee;
-
-    } else if (isNaN(amountAdded) && !isNaN(bankAmount)) {
-      inputMode = "Final Bank Amount Requested";
-      bankSent = bankAmount;
-      amount = (bankSent + fixed) / (1 - rate);
-      platformFee = amount * rate;
-      totalFee = platformFee + fixed;
-
-    } else {
-      alert("Please enter ONLY one value.");
-      return;
-    }
-
-    var receiptText =
+  var receipt =
 "-------------------------------\n" +
 "Siri Credit Card Services\n" +
 "Transaction Receipt\n" +
 "-------------------------------\n" +
-"Input Mode   : " + inputMode + "\n" +
-"Date & Time  : " + new Date().toLocaleString() + "\n" +
-"Handled By   : Sagar\n" +
-"Contact      : 9959787923\n\n" +
-"Amount Added : ₹" + amount.toFixed(2) + "\n" +
-"Platform %   : " + (rate * 100).toFixed(2) + "%\n" +
-"Platform Fee : ₹" + platformFee.toFixed(2) + "\n" +
-"Fixed Fee    : ₹" + fixed.toFixed(2) + "\n" +
+"Amount     : ₹" + amount.toFixed(2) + "\n" +
+"Platform % : " + (rate * 100).toFixed(2) + "%\n" +
+"Platform ₹ : ₹" + platformFee.toFixed(2) + "\n" +
+"Fixed Fee  : ₹" + fixedFee.toFixed(2) + "\n" +
 "-------------------------------\n" +
-"Total Fee    : ₹" + totalFee.toFixed(2) + "\n" +
-"Net to Bank  : ₹" + bankSent.toFixed(2) + "\n" +
-"-------------------------------\n" +
-"Thank you for choosing Siri Credit Card Services.";
+"Total Fee  : ₹" + totalFee.toFixed(2) + "\n" +
+"To Bank    : ₹" + toBank.toFixed(2) + "\n" +
+"-------------------------------";
 
-    var box = document.getElementById("receiptOutput");
-    box.style.display = "block";
-    box.textContent = receiptText;
-  };
+  var box = document.getElementById("receiptOutput");
+  box.style.display = "block";
+  box.textContent = receipt;
+}
 
-  window.shareWhatsApp = function () {
-    var text = document.getElementById("receiptOutput").textContent.trim();
-    if (!text) {
-      alert("Please generate the receipt first.");
-      return;
-    }
-    window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
-  };
-
-});
+function shareWhatsApp() {
+  var text = document.getElementById("receiptOutput").textContent.trim();
+  if (!text) {
+    alert("Generate receipt first.");
+    return;
+  }
+  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
+}
 </script>
