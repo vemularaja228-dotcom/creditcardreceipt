@@ -81,10 +81,10 @@
   <h2>Siri Credit Card Services</h2>
 
   <label>Amount Added (₹)</label>
-  <input type="number" id="amountAdded">
+  <input type="number" id="amountAdded" placeholder="e.g. 100000">
 
   <label>OR Final Bank Amount (₹)</label>
-  <input type="number" id="bankAmount">
+  <input type="number" id="bankAmount" placeholder="e.g. 97985">
 
   <label>Platform Charges (%)</label>
   <input type="number" id="platformRate" value="2">
@@ -114,16 +114,18 @@ function calculate() {
   const rate  = parseFloat(document.getElementById("platformRate").value) / 100;
   const fixed = parseFloat(document.getElementById("fixedFee").value);
 
-  let amount, toBank, platformFee, totalFee;
+  let amount, toBank, platformFee, totalFee, inputMode;
 
-  // ✅ PRIORITY LOGIC (cannot fail)
+  // ✅ Priority-based logic (never fails)
   if (amountAddedVal) {
+    inputMode = "Amount Added by Customer";
     amount = parseFloat(amountAddedVal);
     platformFee = amount * rate;
     totalFee = platformFee + fixed;
     toBank = amount - totalFee;
 
   } else if (bankAmountVal) {
+    inputMode = "Final Bank Amount Requested";
     toBank = parseFloat(bankAmountVal);
     amount = (toBank + fixed) / (1 - rate);
     platformFee = amount * rate;
@@ -143,13 +145,29 @@ Date       : ${new Date().toLocaleString()}
 Handled By : Sagar
 Contact    : 9959787923
 
-Amount     : ₹${amount.toFixed(2)}
-Platform % : ${(rate * 100).toFixed(2)}%
-Platform ₹ : ₹${platformFee.toFixed(2)}
-Fixed Fee  : ₹${fixed.toFixed(2)}
+Transaction Type : Credit Card to Bank
+Input Mode       : ${inputMode}
+
+Amount Added : ₹${amount.toFixed(2)}
+Platform %   : ${(rate * 100).toFixed(2)}%
+Platform Fee : ₹${platformFee.toFixed(2)}
+Fixed Fee    : ₹${fixed.toFixed(2)}
 -------------------------------
-Total Fee  : ₹${totalFee.toFixed(2)}
-To Bank    : ₹${toBank.toFixed(2)}
+Total Fee   : ₹${totalFee.toFixed(2)}
+Net to Bank : ₹${toBank.toFixed(2)}
+-------------------------------
+
+Other Services Available:
+• Credit Card Swiping
+• Life Insurance (SBI Life)
+• Health Insurance (Star Health)
+• Vehicle Insurance
+• New Credit Card Applications
+
+-------------------------------
+Thank you for choosing
+Siri Credit Card Services
+Please retain this receipt for reference.
 -------------------------------`;
 
   const box = document.getElementById("receiptOutput");
